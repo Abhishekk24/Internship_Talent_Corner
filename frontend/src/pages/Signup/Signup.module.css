@@ -65,6 +65,10 @@
   margin: 5px;
 }
 
+.headings{
+  margin-top: 25px;
+}
+
 .footer {
   display: flex;
   flex-direction: column;

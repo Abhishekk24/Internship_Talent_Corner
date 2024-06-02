@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loader from './Loader';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Dashboard.css';
 

@@ -33,13 +33,30 @@
   color: #666;
 }
 
+.close-icon {
+  border: 2px solid #ffffff; /* Add a border to create a circle */
+  border-radius: 50%; /* Make the border round */
+  padding: 5px; /* Adjust padding to control the size of the circle */
+  cursor: pointer; /* Change cursor to pointer */
+  position: absolute; /* Position the icon */
+  width: 30px;
+  height: 30px;
+  color: white;
+  top: 10px; /* Adjust position as needed */
+  left: 10px; /* Adjust position as needed */
+  background-color: #674F7F; /* Optional: background color */
+}
+
+
 .card-title {
   font-size: 18px;
   font-weight: bold;
+  color:#6a0dad ;
 }
 
 .card-body p {
   margin-bottom: 5px;
+  color:#6a0dad ;
 }
 .btn{  
   background-color: #674F7F !important;

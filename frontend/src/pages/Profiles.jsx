@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import { FaPhoneAlt, FaEnvelope, FaArrowLeft  } from 'react-icons/fa';
 import './Profiles.css';
+import Loader from './Loader'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 const Profiles = () => {
   const { contactNo } = useParams();
   const [userDetails, setUserDetails] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -16,8 +19,10 @@ const Profiles = () => {
         const response = await axios.get(`http://localhost:3001/api/user-details/${contactNo}`);
         setUserDetails(response.data);
         setFormData(response.data);
+        setIsLoading(false); 
       } catch (error) {
         console.error('Error fetching user details:', error);
+        setIsLoading(false); 
       }
     };
 
@@ -34,8 +39,10 @@ const Profiles = () => {
       await axios.put(`http://localhost:3001/api/update-user-details/${contactNo}`, formData);
       setUserDetails(formData);
       setIsEditing(false);
+      setIsLoading(false); 
     } catch (error) {
       console.error('Error updating user details:', error);
+      setIsLoading(false); 
     }
   };
 
@@ -43,6 +50,10 @@ const Profiles = () => {
     setFormData(userDetails);
     setIsEditing(false);
   };
+
+  if (isLoading) {
+    return <Loader />; // Display loader while fetching data
+  }
 
   return (
     <div className="container">
@@ -53,17 +64,21 @@ const Profiles = () => {
               <div className="card profile-widget">
                 <div className="card-body">
                   <div className="d-flex flex-column align-items-center text-center">
-                    <img
-                      src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                      alt="Admin"
-                      className="rounded-circle p-1 bg-primary avatar"
-                    />
+                    <div className="position-relative w-100">
+                      <FaArrowLeft  className="close-icon" onClick={() => navigate(-1)} />
+                      <img
+                        src="https://bootdey.com/img/Content/avatar/avatar6.png"
+                        alt="Admin"
+                        className="rounded-circle p-1 bg-primary avatar"
+                      />
+                    </div>
                     <div className="mt-3">
                       <h4>{userDetails.Name}</h4>
                       <p className="text-secondary mb-1">{userDetails.Role}</p>
                       <p className="text-secondary mb-1">{userDetails.current_location}</p>
                     </div>
-                  </div>
+                </div>
+
                   <hr className="my-4" />
                   <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 className="mb-0">

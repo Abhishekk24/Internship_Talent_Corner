@@ -93,8 +93,10 @@ function Filter() {
     };
 
     const handleEmailClick = (emailId) => {
-        window.location.href = `mailto:${emailId}`;
+        const url = `mailto:${emailId}`;
+        window.open(url, '_blank');
     };
+      
 
     const handleCallClick = (contactNo) => {
         window.location.href = `tel:${contactNo}`;
@@ -118,9 +120,10 @@ function Filter() {
             maxHeight: 'calc(100vh - 20px)', /* Limit the height of the page to the viewport height minus top margin */
         },
         tableContainer: {
-            margin: '20px auto',
+            margin: '30px auto',
+            marginLeft:'135px',
             width: 'auto',
-            maxHeight: '450px',
+            maxHeight: '430px',
             fontSize: '16px',
             boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             overflowY: 'auto',
@@ -132,7 +135,7 @@ function Filter() {
             borderRadius: '10px', /* Round the corners of the table container */
         },
         table: {
-            width: '100%',
+            width: 'auto',
             borderCollapse: 'separate', /* Use separate to apply spacing between rows */
             backgroundColor: '#fff',
             borderSpacing: '0 12px', /* Space between rows */
@@ -167,7 +170,6 @@ function Filter() {
         pagination: {
             display: 'flex',
             justifyContent: 'center',
-            margin: '20px 0',
         },
         button: {
             margin: '0 5px',
@@ -357,7 +359,7 @@ function Filter() {
          
             <div style={styles.app}>
                 <div style={styles.tableContainer}>
-                    <table style={styles.table}>
+                    <table className="table table-hover" style={styles.table}>
                         <thead>
                             <tr>
                                 <th style={{ ...styles.thTd, ...styles.th }}>Name</th>

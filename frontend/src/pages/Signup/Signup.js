@@ -50,7 +50,7 @@ function Signup() {
       <div className={styles.innerBox}>
         <div className={styles.logo}>
           <img src={logo} alt="Talent Logo" />
-          <h6><b>Welcome to Talent Corner - India’s Biggest Placement Consultancy</b></h6>
+          <h6 className={styles.headings} ><b>Welcome to Talent Corner - India’s Biggest Placement Consultancy</b></h6>
         </div>
         <h1 className={styles.heading}>Sign up</h1>
 
