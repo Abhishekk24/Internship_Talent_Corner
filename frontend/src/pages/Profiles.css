@@ -1,0 +1,46 @@
+/* Assuming this is added to your UserProfile.css or a global CSS file */
+.scrollable-container {
+  margin-left: 250px;
+  max-height: 100vh; /* or any desired max height */
+  overflow-y: auto;
+  max-width: 100%;
+  padding: 20px;
+}
+
+.profile-widget {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-secondary {
+  color: #666;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-body p {
+  margin-bottom: 5px;
+}
+.btn{  
+  background-color: #674F7F !important;
+}
