@@ -71,8 +71,8 @@ const Sidebar = (props) => {
                     <li className={location.pathname === "/dashboard" ? "active" : ""}>
                         <div onClick={() => handleIconClick("/dashboard")}>
                             <img src={Dashboard} alt="dashboard" />
-                            {!closeMenu && <span className="label">Dashboard</span>}
-                            {closeMenu && <span className="text">Dashboard</span>}
+                            {!closeMenu && <span className="label">Home</span>}
+                            {closeMenu && <span className="text">Home</span>}
                         </div>
                     </li>
               

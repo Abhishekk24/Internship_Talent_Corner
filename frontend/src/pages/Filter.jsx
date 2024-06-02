@@ -107,12 +107,13 @@ function Filter() {
     const styles = {
         app: {
             fontFamily: 'Cambria, Cochin, Georgia, Times, Times New Roman, serif',
-            marginLeft:'120px',
+            
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             alignContent:'center',
             overflowY: 'auto',
+            backgroundColor: '#f4f9f4',
             marginTop:'15px',
             maxHeight: 'calc(100vh - 20px)', /* Limit the height of the page to the viewport height minus top margin */
         },
@@ -257,7 +258,8 @@ function Filter() {
     };
 
     return (
-        <div style={{ marginLeft: "180px", maxHeight: 'calc(100vh - 100px)' }}>
+        <div style={{backgroundColor:'#f4f9f4', marginLeft:'120px'}}>
+        <div >
             <div style={styles.filterBar}>
                 <div style={styles.filterItem}>
                     <MultiSelect
@@ -430,6 +432,7 @@ function Filter() {
                     Next
                 </button>
             </div>
+        </div>
         </div>
     );
 }
