@@ -89,7 +89,9 @@ function Filter() {
     };
 
     const handleWhatsAppClick = (contactNo) => {
-        window.open(`https://wa.me/${contactNo}`, '_blank');
+        const message = "Please send your updated CV";
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${contactNo}?text=${encodedMessage}`, '_blank');
     };
 
     const handleEmailClick = (emailId) => {

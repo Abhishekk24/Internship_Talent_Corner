@@ -88,9 +88,9 @@ const Dashboard = () => {
             {filteredData.map((row, index) => (
               <tr key={index}>
                 <td>
-                  <i 
-                    className="bi bi-person-circle" 
-                    style={{ marginRight: '8px', cursor: 'pointer' }} 
+                  <i
+                    className="bi bi-person-circle"
+                    style={{ marginRight: '8px', cursor: 'pointer' }}
                     onClick={() => handleProfileClick(row.contact_no)}
                   ></i>
                   {row.Name}
@@ -99,7 +99,7 @@ const Dashboard = () => {
                 <td>{row.years_of_experience}</td>
                 <td>{row.current_location}</td>
                 <td className="action-cell">
-                  <a href={`https://wa.me/${row.contact_no}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/${row.contact_no}?text=${encodeURIComponent("Please send your updated CV")}`} target="_blank" rel="noopener noreferrer">
                     <i className="bi bi-whatsapp icon-purple-dark"></i>
                   </a>
                   <a href={`mailto:${row.email_id}`} target="_blank">
