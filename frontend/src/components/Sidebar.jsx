@@ -72,8 +72,8 @@ const Sidebar = ({ name, email, sidebarOpen, setSidebarOpen }) => {
                     <li className={location.pathname === "/excel" ? "active" : ""}>
                         <div onClick={() => handleIconClick("/excel")}>
                             <img src={Transactions} alt="filter" />
-                            {!sidebarOpen && <span className="label">Excel Uploader</span>}
-                            {sidebarOpen && <span className="text">Excel Uploader</span>}
+                            {!sidebarOpen && <span className="label"> Upload</span>}
+                            {sidebarOpen && <span className="text">Upload</span>}
                         </div>
                     </li>
                     <li className={location.pathname === "/logout" ? "active" : ""}>
