@@ -69,6 +69,13 @@ const Sidebar = ({ name, email, sidebarOpen, setSidebarOpen }) => {
                             {sidebarOpen && <span className="text">Filters</span>}
                         </div>
                     </li>
+                    <li className={location.pathname === "/excel" ? "active" : ""}>
+                        <div onClick={() => handleIconClick("/excel")}>
+                            <img src={Transactions} alt="filter" />
+                            {!sidebarOpen && <span className="label">Excel Uploader</span>}
+                            {sidebarOpen && <span className="text">Excel Uploader</span>}
+                        </div>
+                    </li>
                     <li className={location.pathname === "/logout" ? "active" : ""}>
                         <div onClick={() => handleIconClick("/logout")}>
                             <img src={Transactions} alt="logout" />

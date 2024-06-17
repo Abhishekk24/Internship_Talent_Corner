@@ -82,11 +82,13 @@ function Filter(props) {
         fetchFilteredData();
     }, [selectedRoles, selectedLocations, selectedUgDegrees, selectedPgDegrees, selectedAnnSalaries, selectedYearsOfExperience, selectedGender, selectedAge, currentPage]);
 
-    const handlePageChange = (page) => {
-        if (page >= 1 && page <= totalPages) {
-            setCurrentPage(page);
-        }
-    };
+    const handlePrevPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+      };
+    
+      const handleNextPage = () => {
+        setCurrentPage(currentPage + 1);
+      };
 
     const handleWhatsAppClick = (contactNo) => {
         const message = "Please send your updated CV";
@@ -344,7 +346,7 @@ function Filter(props) {
                                             style={{ marginRight: '8px', cursor: 'pointer' }} 
                                             onClick={() => handleProfileClick(row.contact_no)}
                                         ></i>
-                                        {row.Name}
+                                        {row.Name_1}
                                     </td>
                                     <td style={styles.thTd}>{row.Role}</td>
                                     <td style={styles.thTd}>{row.years_of_experience}</td>
@@ -375,24 +377,14 @@ function Filter(props) {
             <div style={styles.pagination}>
                 <button
                     style={styles.button}
-                    onClick={() => handlePageChange(currentPage - 1)}
+                    onClick={() => handlePrevPage()}
                     disabled={currentPage === 1}
                 >
                     Previous
                 </button>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index + 1}
-                        style={{ ...styles.button, fontWeight: currentPage === index + 1 ? 'bold' : 'normal' }}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
                 <button
                     style={styles.button}
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    onClick={() => handleNextPage()}
                 >
                     Next
                 </button>

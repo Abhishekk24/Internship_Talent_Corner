@@ -1,4 +1,3 @@
-/* Styles for desktop */
 .container {
   display: flex;
   flex-direction: row; /* Keep as row for larger screens */
@@ -21,7 +20,7 @@
   width: 110%; /* Set the width to 100% of its container */
   height: auto; /* Maintain aspect ratio */
   max-width: none; /* Allow the image to exceed its natural width */
-  object-fit: cover; 
+  object-fit: cover; /* Scale the image while maintaining aspect ratio */
 }
 
 .rightSection {
@@ -29,36 +28,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px; /* Adjust padding as needed */
+  padding: 10px; /* Adjust padding as needed */
   order: 2; /* Ensure rightSection is on the right */
 }
 
 .innerBox {
-  min-width: 480px;
-  height: fit-content;
   width: fit-content;
+  max-width: 480px;
+  padding: 20px; /* Reduced padding */
   background-color: rgb(255, 255, 255);
-  box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.6);
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-top: 20px;
-  padding-bottom: 10px;
   border-radius: 10px;
+  box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  gap: 11px;
-  
-}
-.verification-message {
-  font-weight: bold;
-  font-size: 0.875rem;
-  color: red; /* Red color for error messages */
-  text-align: center;
-  background-color: #ffe6e6; /* Light red background */
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.7);
-  margin-top: 10px; /* Optional: Adjust spacing */
+  gap: 10px; /* Reduced gap */
+  max-height: 90vh; /* Prevent full page coverage */
 }
 
 .logo {
@@ -66,21 +50,27 @@
 }
 
 .logo img {
-  width: 150px;
-  height: 150px;
+  width: 120px; /* Reduced size */
+  height: 120px; /* Reduced size */
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #6d6565;
-  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.7);
+  box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.6);
 }
 
 .logo h6 {
   color: #636363;
-  font-size: 14px;
+  font-size: 14px; /* Reduced font size */
   text-align: center;
   font-weight: 600;
-  margin-bottom: 7px;
-  animation: blink-animation 1.5s infinite;
+  padding-top: 15px; /* Reduced padding */
+ 
+}
+
+.blinkingMessage {
+  color: red;
+  font-weight: bold;
+  animation: blink-animation 1s infinite;
 }
 
 @keyframes blink-animation {
@@ -88,30 +78,31 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.1;
+    opacity: 0;
   }
   100% {
     opacity: 1;
   }
 }
 
+
 .heading {
   color: #737373;
   text-align: center;
-  margin: 5px;
+  margin: 1px;
+
 }
 
 .footer {
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 13px;
+  gap: 10px; /* Reduced gap */
 }
 
 .footer .error {
   font-weight: bold;
   font-size: 0.875rem;
-  color: #675080;
   text-align: center;
 }
 
@@ -123,8 +114,8 @@
   color: #fff;
   border-radius: 5px;
   font-weight: bold;
-  font-size: 1rem;
-  padding: 10px 16px;
+  font-size: 0.9rem; /* Reduced font size */
+  padding: 8px 10px; /* Reduced padding */
   width: 100%;
   transition: 100ms;
   cursor: pointer;
@@ -149,7 +140,7 @@
   font-weight: bold;
   color: #737373;
   letter-spacing: 1px;
-  font-size: 1rem;
+  font-size: 0.9rem; /* Reduced font size */
   text-decoration: none;
 }
 
@@ -169,22 +160,22 @@
   }
 
   .innerBox {
-    min-width: 400px;
-    padding: 20px;
+    min-width: 300px;
+    padding: 15px; /* Reduced padding */
   }
 
   .logo img {
-    width: 100px;
-    height: 100px;
+    width: 80px; /* Reduced size */
+    height: 80px; /* Reduced size */
   }
 
   .logo h6 {
-    font-size: 12px;
+    font-size: 10px; /* Reduced font size */
   }
 
   .footer button {
-    padding: 8px 12px;
-    font-size: 0.9rem;
+    padding: 6px 8px; /* Reduced padding */
+    font-size: 0.8rem; /* Reduced font size */
   }
 }
 
@@ -198,27 +189,23 @@
   .rightSection {
     order: 2; /* Move innerBox above sideImage */
   }
+
   .innerBox {
-    min-width: 300px;
-    padding: 15px;
+    min-width: 250px;
+    padding: 10px; /* Reduced padding */
   }
 
   .logo img {
-    width: 80px;
-    height: 80px;
+    width: 60px; /* Reduced size */
+    height: 60px; /* Reduced size */
   }
 
   .logo h6 {
-    color: #636363;
-    font-size: 14px;
-    text-align: center;
-    font-weight: 600;
-    padding-top: 15px;
-    animation: blink-animation 1.5s infinite;
+    font-size: 8px; /* Reduced font size */
   }
 
   .footer button {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    padding: 4px 6px; /* Reduced padding */
+    font-size: 0.7rem; /* Reduced font size */
   }
 }

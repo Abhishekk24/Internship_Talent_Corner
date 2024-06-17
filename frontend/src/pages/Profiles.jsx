@@ -73,7 +73,7 @@ const Profiles = () => {
                       />
                     </div>
                     <div className="mt-3">
-                      <h4>{userDetails.Name}</h4>
+                      <h4>{userDetails.Name_1}</h4>
                       <p className="text-secondary mb-1">{userDetails.Role}</p>
                       <p className="text-secondary mb-1">{userDetails.current_location}</p>
                     </div>
@@ -111,7 +111,7 @@ const Profiles = () => {
                           <h6 className="mb-0">Full Name</h6>
                         </div>
                         <div className="col-sm-9 text-secondary">
-                          <input type="text" className="form-control" name="Name" value={formData.Name} onChange={handleInputChange} />
+                          <input type="text" className="form-control" name="Name_1" value={formData.Name_1} onChange={handleInputChange} />
                         </div>
                       </div>
                       <div className="row mb-3">
@@ -264,7 +264,7 @@ const Profiles = () => {
                           <h6 className="mb-0">Full Name</h6>
                         </div>
                         <div className="col-sm-9 text-secondary">
-                          <p>{userDetails.Name}</p>
+                          <p>{userDetails.Name_1}</p>
                         </div>
                       </div>
                       <div className="row mb-3">

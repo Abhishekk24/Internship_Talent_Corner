@@ -38,7 +38,7 @@ function Signup() {
         });
         await sendEmailVerification(user);
         setSubmitButtonDisabled(false);
-        setErrorMsg("Verification email sent. Please verify your email.");
+        setErrorMsg("Verification Email Is Sent, Please Verify Your Email.");
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -105,7 +105,7 @@ function Signup() {
           </div>
 
           <div className={styles.footer}>
-            <b className={styles.error}>{errorMsg}</b>
+            <b className={`${styles.error} ${errorMsg === "Verification Email Is Sent, Please Verify Your Email." ? styles.blinkingMessage : ""}`}>{errorMsg}</b>
             <button onClick={handleSubmission} disabled={submitButtonDisabled}>
               Signup
             </button>

@@ -30,7 +30,7 @@ function Login() {
       .then(async (res) => {
         setSubmitButtonDisabled(false);
         if (!res.user.emailVerified) {
-          setErrorMsg("Please verify your email before logging in.");
+          setErrorMsg("Please Verify Your Email Before Logging In.");
           return;
         }
         navigate("/dashboard");
@@ -84,8 +84,8 @@ function Login() {
           </div>
 
           <div className={styles.footer}>
-            <b className={styles.error}>{errorMsg}</b>
-            <button disabled={submitButtonDisabled} onClick={handleSubmission}>
+            <b className={`${styles.error} ${errorMsg === "Please Verify Your Email Before Logging In." ? styles.blinkingMessage : ""}`}>{errorMsg}</b>
+            <button onClick={handleSubmission} disabled={submitButtonDisabled}>
               Login
             </button>
             <p>

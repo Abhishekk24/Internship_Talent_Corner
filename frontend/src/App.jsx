@@ -7,6 +7,7 @@ import Profiles from "./pages/Profiles";
 import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import ExcelUploader from "./pages/ExcelUploader"
 import { auth } from "./firebase";
 import "../src/styles/main.scss";
 
@@ -56,6 +57,7 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard sidebarOpen={sidebarOpen} />} />
             <Route path="/profiles/:contactNo" element={<Profiles sidebarOpen={sidebarOpen} />} />
+            <Route path="/excel" element={<ExcelUploader sidebarOpen={sidebarOpen}/>} />
             <Route path="/filter" element={<Filter sidebarOpen={sidebarOpen}/>} />
           </Routes>
         )}

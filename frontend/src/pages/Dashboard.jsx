@@ -111,7 +111,7 @@ const Dashboard = ({ sidebarOpen }) => {
                         style={{ marginRight: '8px', cursor: 'pointer' }}
                         onClick={() => handleProfileClick(row.contact_no)}
                       ></i>
-                      {row.Name}
+                      {row.Name_1}
                     </td>
                     <td>{row.Role}</td>
                     <td>{row.years_of_experience}</td>

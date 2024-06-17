@@ -14,7 +14,7 @@ function parseBooleanSearch(searchTerm) {
             const [field, value] = term.split('NOT').map(s => s.trim());
             return `(${field} NOT LIKE '%${value}%')`;
         } else {
-            return `(Name LIKE '%${term}%' OR Role LIKE '%${term}%' OR current_location LIKE '%${term}%' OR email_id LIKE '%${term}%' OR contact_no LIKE '%${term}%')`;
+            return `(Name_1 LIKE '%${term}%' OR Role LIKE '%${term}%' OR current_location LIKE '%${term}%' OR email_id LIKE '%${term}%' OR contact_no LIKE '%${term}%')`;
         }
     });
     return conditions.join(' AND ');
@@ -22,10 +22,10 @@ function parseBooleanSearch(searchTerm) {
 
 async function getUserDetails(contactNo) {
     return new Promise((resolve, reject) => {
-        const query = `SELECT Name, email_id, contact_no, current_location, State, Department, Role, Industry, 
+        const query = `SELECT Name_1, email_id, contact_no, current_location, State, Department, Role, Industry, 
                         years_of_experience, ann_salary, curr_company_name, curr_company_duration_from, 
                         curr_company_designation, prev_employer_name, ug_degree, ug_specialization, ug_year, 
-                        pg_degree, pg_specialization, pg_college, pg_yeat, Gender, marital_status, Age 
+                        pg_degree, pg_specialization, pg_college, pg_year, Gender, marital_status, Age 
                         FROM naukri_details 
                         WHERE contact_no = ?`;
 
@@ -41,7 +41,7 @@ async function getUserDetails(contactNo) {
 
 async function getDetails(offset = 0, limit = 10, searchTerm = '', booleanSearch = false) {
     return new Promise((resolve, reject) => {
-        let query = `SELECT Name, Role, years_of_experience, current_location, contact_no, email_id FROM naukri_details`;
+        let query = `SELECT Name_1, Role, years_of_experience, current_location, contact_no, email_id FROM naukri_details`;
 
         if (searchTerm) {
             if (booleanSearch) {
@@ -49,7 +49,7 @@ async function getDetails(offset = 0, limit = 10, searchTerm = '', booleanSearch
                 query += ` WHERE ${booleanCondition}`;
             } else {
                 query += ` WHERE 
-                    LOWER(Name) LIKE '%${searchTerm}%' OR 
+                    LOWER(Name_1) LIKE '%${searchTerm}%' OR 
                     LOWER(Role) LIKE '%${searchTerm}%' OR
                     LOWER(current_location) LIKE '%${searchTerm}%' OR
                     LOWER(email_id) LIKE '%${searchTerm}%' OR
@@ -57,7 +57,7 @@ async function getDetails(offset = 0, limit = 10, searchTerm = '', booleanSearch
             }
         }
 
-        query += ` ORDER BY Name LIMIT ${limit} OFFSET ${offset}`;
+        query += ` ORDER BY Name_1 LIMIT ${limit} OFFSET ${offset}`;
 
         config.query(query, (err, rows) => {
             if (err) {
@@ -73,19 +73,19 @@ async function getDetails(offset = 0, limit = 10, searchTerm = '', booleanSearch
 async function updateUserDetails(contactNo, userDetails) {
     return new Promise((resolve, reject) => {
         const query = `UPDATE naukri_details SET 
-                        Name = ?, email_id = ?, contact_no = ?, current_location = ?, State = ?, Department = ?, 
+                        Name_1 = ?, email_id = ?, contact_no = ?, current_location = ?, State = ?, Department = ?, 
                         Role = ?, Industry = ?, years_of_experience = ?, ann_salary = ?, curr_company_name = ?, 
                         curr_company_duration_from = ?, curr_company_designation = ?, prev_employer_name = ?, 
                         ug_degree = ?, ug_specialization = ?, ug_year = ?, pg_degree = ?, pg_specialization = ?, 
-                        pg_college = ?, pg_yeat = ?, Gender = ?, marital_status = ?, Age = ?
+                        pg_college = ?, pg_year = ?, Gender = ?, marital_status = ?, Age = ?
                         WHERE contact_no = ?`;
 
         const values = [
-            userDetails.Name, userDetails.email_id, userDetails.contact_no, userDetails.current_location, userDetails.State, 
+            userDetails.Name_1, userDetails.email_id, userDetails.contact_no, userDetails.current_location, userDetails.State, 
             userDetails.Department, userDetails.Role, userDetails.Industry, userDetails.years_of_experience, userDetails.ann_salary, 
             userDetails.curr_company_name, userDetails.curr_company_duration_from, userDetails.curr_company_designation, 
             userDetails.prev_employer_name, userDetails.ug_degree, userDetails.ug_specialization, userDetails.ug_year, 
-            userDetails.pg_degree, userDetails.pg_specialization, userDetails.pg_college, userDetails.pg_yeat, 
+            userDetails.pg_degree, userDetails.pg_specialization, userDetails.pg_college, userDetails.pg_year, 
             userDetails.Gender, userDetails.marital_status, userDetails.Age, contactNo
         ];
 
@@ -135,7 +135,7 @@ async function getFiltered(roles, locations, ug_degrees, pg_degrees, ann_salarie
             query += ` AND Age = ${Age}`;
         }
 
-        query += ` ORDER BY Name LIMIT ${limit} OFFSET ${offset}`;
+        query += ` ORDER BY Name_1 LIMIT ${limit} OFFSET ${offset}`;
         config.query(query, (err, rows) => {
             if (err) {
                 console.log('Query Error:', err);
@@ -231,6 +231,57 @@ async function getExp() {
     });
 }
 
+async function insertCSVData(data) {
+    return new Promise((resolve, reject) => {
+        if (!data || data.length === 0) {
+            return reject(new Error("No data to insert"));
+        }
+
+        const values = data.map(row => [
+            row.Name_1,
+            row.email_id,
+            row.contact_no,
+            row.current_location,
+            row.State,
+            row.Department,
+            row.Role,
+            row.Industry,
+            row.years_of_experience,
+            row.ann_salary,
+            row.curr_company_name,
+            row.curr_company_duration_from,
+            row.curr_company_designation,
+            row.prev_employer_name,
+            row.ug_degree,
+            row.ug_specialization,
+            row.ug_year,
+            row.pg_degree,
+            row.pg_specialization,
+            row.pg_college,
+            row.pg_year,
+            row.Gender,
+            row.marital_status,
+            row.Age
+        ]);
+
+        const query = `INSERT INTO naukri_details (Name_1, email_id, contact_no, current_location, State, Department, Role, Industry, 
+                            years_of_experience, ann_salary, curr_company_name, curr_company_duration_from, 
+                            curr_company_designation, prev_employer_name, ug_degree, ug_specialization, ug_year, 
+                            pg_degree, pg_specialization, pg_college, pg_year, Gender, marital_status, Age) VALUES ?`;
+
+        
+
+        config.query(query, [values], (err, result) => {
+            if (err) {
+                console.error('Insert Query Error:', err);
+                return reject(err);
+            }
+            console.log('Insert Result:', result); // Log the insert result
+            resolve(result);
+        });
+    });
+}
+
 module.exports = {
     getUserDetails,
     getDetails,
@@ -241,5 +292,6 @@ module.exports = {
     getUgDegrees,
     getPgDegrees,
     getAnnSalaries,
+    insertCSVData,
     getExp
 };

@@ -64,7 +64,13 @@
   text-align: center;
   font-weight: 600;
   padding-top: 15px;
-  animation: blink-animation 1.5s infinite;
+  
+}
+
+.blinkingMessage {
+  color: red;
+  font-weight: bold;
+  animation: blink-animation 1s infinite;
 }
 
 @keyframes blink-animation {
@@ -96,7 +102,6 @@
 .footer .error {
   font-weight: bold;
   font-size: 0.875rem;
-  color: #675080;
   text-align: center;
 }
 
