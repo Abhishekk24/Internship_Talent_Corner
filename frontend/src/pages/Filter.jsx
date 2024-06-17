@@ -128,8 +128,10 @@ function Filter(props) {
 
     const handleSendEmails = async () => {
         try {
-            const selectedEmails = selectedRows.map(row => row.email_id);
-            await axios.post('http://localhost:3001/api/send-emails', { emails: selectedEmails });
+            for (let row of selectedRows) {
+                const selectedEmail = row.email_id;
+                await axios.post('http://localhost:3001/api/send-emails', { emails: [selectedEmail] });
+            }
             alert('Emails sent successfully!');
         } catch (error) {
             console.error('Error sending emails:', error);

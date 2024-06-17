@@ -159,7 +159,7 @@
             p.name {
                 padding: 0;
                 margin: 0;
-                font-size: 16.7px;
+                font-size: 17px;
                 color: $darkGrey;
                 text-transform: capitalize;
                 font-weight: $heavyFont;
@@ -201,6 +201,9 @@
 
                 img {
                     padding: 0 1rem 0 0.8rem;
+                }
+                .img-specific-padding {
+                    padding-left: 19px; /* Adjust padding as needed */
                 }
 
                 
@@ -258,8 +261,9 @@
 
             li:hover {
                 background-color: $lightGrey;
-                transition: 0.25s;
+                transition: 0.35s;
                 color: #4c51bf;
+                padding: 0.75rem 0rem;
                 
             }
         }
@@ -328,13 +332,16 @@
         }
         li:hover {
             background-color: $lightGrey;
-            transition: 0.25s;
+            transition: 0.35s;
             color: #4c51bf;
             width: 50px;
             height: 50px;
         }
         img {
             padding: 0 1rem 0 0.5rem;
+        }
+        .img-specific-padding {
+            padding-left: 12px; /* Adjust padding as needed */
         }
         a {
             opacity: 0;

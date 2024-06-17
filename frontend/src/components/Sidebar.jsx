@@ -5,6 +5,7 @@ import Profile from "../Images/profile.png";
 import Dashboard from "../Images/dashboard.svg";
 import Transactions from "../Images/transactions.svg";
 import Performance from "../Images/performance.svg";
+import Logout from "../Images/logout.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
@@ -78,7 +79,7 @@ const Sidebar = ({ name, email, sidebarOpen, setSidebarOpen }) => {
                     </li>
                     <li className={location.pathname === "/logout" ? "active" : ""}>
                         <div onClick={() => handleIconClick("/logout")}>
-                            <img src={Transactions} alt="logout" />
+                            <img src={Logout} alt="logout" className="img-specific-padding"/>
                             {!sidebarOpen && <span className="label">Logout</span>}
                             {sidebarOpen && <span className="text">Logout</span>}
                         </div>

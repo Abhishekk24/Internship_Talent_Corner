@@ -173,21 +173,25 @@ const transporter = nodemailer.createTransport({
 app.post('/api/send-emails', async (req, res) => {
   const { emails } = req.body;
 
-  const mailOptions = {
-      from: 'mhatresanskruti42@gmail.com',
-      to: emails,
-      subject: 'hello',
-      text: 'this is for testing mail',
-  };
-
   try {
-      await transporter.sendMail(mailOptions);
+      for (let email of emails) {
+          const mailOptions = {
+              from: 'mhatresanskruti42@gmail.com',
+              to: email,
+              subject: 'Talent Corner Hr Services Pvt Ltd',
+              text: 'This mail is regarding Job Hiring Purpose',
+          };
+
+          await transporter.sendMail(mailOptions);
+      }
       res.status(200).json({ message: 'Emails sent successfully' });
   } catch (error) {
       console.error('Error sending emails:', error);
       res.status(500).json({ error: 'Failed to send emails' });
   }
 });
+
+
 
 // Start the server
 app.listen(port, () => {
