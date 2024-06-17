@@ -3,10 +3,10 @@ const cors = require('cors');
 const multer = require('multer');
 const csvParser = require('csv-parser');
 const { Readable } = require('stream');
+const nodemailer = require('nodemailer');
 const dboperations = require('./dbOperations');
 const app = express();
 const port = 3001;
-
 app.use(cors());
 app.use(express.json());
 
@@ -159,6 +159,35 @@ app.get('/api/filter', async (req, res) => {
   }
 });
 
+
+// Nodemailer setup
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // You can use other email services
+  auth: {
+      user: 'mhatresanskruti42@gmail.com', // Your email
+      pass: 'przjkjwyfkjdhxsr'// Your email password
+  }
+});
+
+// Route to send emails
+app.post('/api/send-emails', async (req, res) => {
+  const { emails } = req.body;
+
+  const mailOptions = {
+      from: 'mhatresanskruti42@gmail.com',
+      to: emails,
+      subject: 'hello',
+      text: 'this is for testing mail',
+  };
+
+  try {
+      await transporter.sendMail(mailOptions);
+      res.status(200).json({ message: 'Emails sent successfully' });
+  } catch (error) {
+      console.error('Error sending emails:', error);
+      res.status(500).json({ error: 'Failed to send emails' });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
