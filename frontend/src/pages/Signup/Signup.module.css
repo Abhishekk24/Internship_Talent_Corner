@@ -1,12 +1,36 @@
 /* Styles for desktop */
 .container {
+  display: flex;
+  flex-direction: row; /* Keep as row for larger screens */
   height: 100%;
   min-height: 100vh;
   width: 100%;
-  background-color: #fff;
+  background: linear-gradient(135deg, #5E376C, #954C93);
+}
+
+.leftSection {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px; /* Adjust padding as needed */
+  order: 1; /* Ensure leftSection is on the left */
+}
+
+.leftSection img {
+  width: 110%; /* Set the width to 100% of its container */
+  height: auto; /* Maintain aspect ratio */
+  max-width: none; /* Allow the image to exceed its natural width */
+  object-fit: cover; 
+}
+
+.rightSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Adjust padding as needed */
+  order: 2; /* Ensure rightSection is on the right */
 }
 
 .innerBox {
@@ -23,6 +47,18 @@
   display: flex;
   flex-direction: column;
   gap: 11px;
+  
+}
+.verification-message {
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: red; /* Red color for error messages */
+  text-align: center;
+  background-color: #ffe6e6; /* Light red background */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.7);
+  margin-top: 10px; /* Optional: Adjust spacing */
 }
 
 .logo {
@@ -65,10 +101,6 @@
   margin: 5px;
 }
 
-.headings{
-  margin-top: 25px;
-}
-
 .footer {
   display: flex;
   flex-direction: column;
@@ -109,6 +141,8 @@
 .footer p {
   font-weight: 700;
   color: #675080;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .footer p span a {
@@ -121,8 +155,21 @@
 
 /* Media Queries for Tablet */
 @media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack vertically on smaller screens */
+  }
+
+  .leftSection {
+    order: 1; /* Move sideImage below innerBox */
+    padding-bottom: 20px; /* Add padding to bottom of leftSection */
+  }
+
+  .rightSection {
+    order: 2; /* Move innerBox above sideImage */
+  }
+
   .innerBox {
-    min-width: 300px;
+    min-width: 400px;
     padding: 20px;
   }
 
@@ -143,8 +190,16 @@
 
 /* Media Queries for Mobile */
 @media only screen and (max-width: 480px) {
+  .leftSection {
+    order: 1; /* Move sideImage below innerBox */
+    padding-bottom: 20px; /* Add padding to bottom of leftSection */
+  }
+
+  .rightSection {
+    order: 2; /* Move innerBox above sideImage */
+  }
   .innerBox {
-    min-width: 250px;
+    min-width: 300px;
     padding: 15px;
   }
 
@@ -154,7 +209,12 @@
   }
 
   .logo h6 {
-    font-size: 10px;
+    color: #636363;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    padding-top: 15px;
+    animation: blink-animation 1.5s infinite;
   }
 
   .footer button {

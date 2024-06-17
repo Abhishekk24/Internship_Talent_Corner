@@ -7,14 +7,15 @@
 /* Your existing CSS */
 @import "./_variables";
 
+
+  
 .main-container {
     display: flex;
-    background-color: $veryLightGreen;
+ }
+
+.main {
+    padding: 10px;
   }
-  main {
-    padding: 50px;
-  }
-  
 
 .h1{
     width: 100vw;
@@ -25,14 +26,16 @@
 }
 
 .sidebar {
-    background-color: $white;
+    background-color: #fff;
     position: absolute;
     top: 0;
+    z-index: 1;
     left: 0;
-    padding: 2rem 3rem;
-    width: 15rem;
+    padding: 1rem 2rem;
+    width: 19rem;
     height: 100vh;
     transition: 0.5s all;
+    
 
  
     .logoContainer {
@@ -56,19 +59,19 @@
 
         h2.title {
             font-size: 31.42px;
-            color: #674F7F;
+            color: $blue;
             padding: 0 0 0 1rem;
         }
     }
 
     .burgerContainer {
         content: "";
-        background-color: #674F7F;
+        background-color: $blue;
          /* Add position relative */
         z-index: 2; /* Set higher z-index than sidebar */
         position: absolute;
         right: (-35px / 2);
-        top: calc(9rem / 0.7);
+        top: calc(9rem / 0.8);
         width: 35px;
         height: 35px;
         border-radius: 2rem;
@@ -87,7 +90,7 @@
 
         .burgerMenu {
             content: "";
-            background-color: #674F7F;
+            background-color: $blue;
             position: relative;
             z-index: 1;
             width: 20px;
@@ -174,7 +177,6 @@
     .contentsContainer {
         
         margin: 2rem 0 0 0;
-        transition: margin-left 0.5s;
 
         ul {
             display: flex;
@@ -191,7 +193,7 @@
                 justify-content: flex-start;
                 flex-direction: row;
                 margin: 0.1rem 0;
-                padding: 0.55rem 0;
+                padding: 0.35rem 0;
                 width: 100%;
                 border-radius: 1rem;
                 cursor: pointer;
@@ -215,8 +217,8 @@
 
                 .label {
                     position: absolute;
-                    top: 30%; /* Adjust the percentage to move it up or down */
-                    left: 5rem; /* Position it to the right of the icon */
+                     /* Adjust the percentage to move it up or down */
+                    left: 5rem;
                     font-size: 1.2rem;
                 }
                 
@@ -241,14 +243,14 @@
 
             li.active {
                 background-color: $veryLightGreen;
-                color: #674F7F;
+                color: $blue;
                 font-weight: bold;
-
+              
                 a {
-                    color: #674F7F;
+                    color: $blue;
                 }
                 .label {
-                    color: #674F7F;
+                    color: $blue;
                 }
             }
 
@@ -263,7 +265,8 @@
 }
 
 .sidebar.active {
-    width: 3rem;
+    width: 6rem;
+    
     transition: 0.5s all;
 
     .logoContainer.active {
@@ -314,16 +317,24 @@
     }
 
     .contentsContainer {
-       
+        
         a {
             opacity: 0;
-            
         }
     }
-    
     
     
 }
 
 
 
+/* styles/main.scss */
+
+.page-content {
+    transition: margin-left 0.3s;
+  }
+  
+  .page-content.shifted {
+    margin-left: 250px; /* Adjust based on your sidebar width */
+  }
+  

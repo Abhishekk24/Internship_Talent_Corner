@@ -5,6 +5,7 @@ import logo from "../../Images/talentlogo.png";
 import InputControl from "../InputControl/InputControl";
 import { auth } from "../../firebase";
 import styles from "../Login/Login.module.css";
+import sideImage from "../../Images/sideImage.png"; // Add your side image here
 
 function Login() {
   const navigate = useNavigate();
@@ -21,13 +22,18 @@ function Login() {
       setErrorMsg("Fill all fields");
       return;
     }
-    setErrorMsg("");
 
+    setErrorMsg("");
     setSubmitButtonDisabled(true);
-    signInWithEmailAndPassword(auth, values.email, values.pass) 
+
+    signInWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
-        navigate("/");
+        if (!res.user.emailVerified) {
+          setErrorMsg("Please verify your email before logging in.");
+          return;
+        }
+        navigate("/dashboard");
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -41,53 +47,58 @@ function Login() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.innerBox}>
-        <div className={styles.logo}>
-          <img src={logo} alt="Talent Logo" />
-          <h6 className={styles.headings} ><b>Welcome to Talent Corner - India’s Biggest Placement Consultancy</b></h6>
-        </div>
-        <h1 className={styles.heading}>Login</h1>
+      <div className={styles.rightSection}>
+        <div className={styles.innerBox}>
+          <div className={styles.logo}>
+            <img src={logo} alt="Talent Logo" />
+            <h6><b>Welcome to Talent Corner - India’s Fastest Growing Recruitment Franchise Network</b></h6>
+          </div>
+          <h1 className={styles.heading}>Login</h1>
 
-        <InputControl
-          label="Email"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, email: event.target.value }))
-          }
-          placeholder="Enter email address"
-        />
-        <div style={{ position: "relative" }}>
           <InputControl
-            label="Password"
-            type={showPassword ? "text" : "password"}
+            label="Email"
             onChange={(event) =>
-              setValues((prev) => ({ ...prev, pass: event.target.value }))
+              setValues((prev) => ({ ...prev, email: event.target.value }))
             }
-            placeholder="Enter Password"
+            placeholder="Enter email address"
           />
-        </div>
-        <div style={{position:"relative"}}>
-          <input
-            type="checkbox"
-            checked={showPassword}
-            onChange={handleTogglePassword}
-            id="showPassword"
-            style={{  right: "10px", top: "50%", }}
-          />
-          <label htmlFor="showPassword" style={{ marginLeft: "5px", color: "#675080"}}>Show Password</label>
-        </div>
+          <div style={{ position: "relative" }}>
+            <InputControl
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, pass: event.target.value }))
+              }
+              placeholder="Enter Password"
+            />
+          </div>
+          <div style={{ position: "relative" }}>
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={handleTogglePassword}
+              id="showPassword"
+              style={{ right: "10px", top: "50%" }}
+            />
+            <label htmlFor="showPassword" style={{ marginLeft: "5px", color: "#675080" }}>Show Password</label>
+          </div>
 
-        <div className={styles.footer}>
-          <b className={styles.error}>{errorMsg}</b>
-          <button disabled={submitButtonDisabled} onClick={handleSubmission}>
-            Login
-          </button>
-          <p>
-            Already have an account?{" "}
-            <span>
-              <Link to="/signup">Sign up</Link>
-            </span>
-          </p>
+          <div className={styles.footer}>
+            <b className={styles.error}>{errorMsg}</b>
+            <button disabled={submitButtonDisabled} onClick={handleSubmission}>
+              Login
+            </button>
+            <p>
+              Not having an account?{" "}
+              <span>
+                <Link to="/signup">Sign up</Link>
+              </span>
+            </p>
+          </div>
         </div>
+      </div>
+      <div className={styles.leftSection}>
+        <img src={sideImage} alt="Side visual" />
       </div>
     </div>
   );

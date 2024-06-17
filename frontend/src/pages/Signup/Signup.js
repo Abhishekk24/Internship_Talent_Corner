@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { Link } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 import logo from "../../Images/talentlogo.png";
 import InputControl from "../InputControl/InputControl";
 import { auth } from "../../firebase";
-
 import styles from "./Signup.module.css";
+import sideImage from "../../Images/sideImage.png"; // Add your side image here
 
 function Signup() {
-  const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -23,17 +26,19 @@ function Signup() {
       setErrorMsg("Fill all fields");
       return;
     }
-    setErrorMsg("");
 
+    setErrorMsg("");
     setSubmitButtonDisabled(true);
+
     createUserWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
-        setSubmitButtonDisabled(false);
         const user = res.user;
         await updateProfile(user, {
           displayName: values.name,
         });
-        navigate("/");
+        await sendEmailVerification(user);
+        setSubmitButtonDisabled(false);
+        setErrorMsg("Verification email sent. Please verify your email.");
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -47,60 +52,74 @@ function Signup() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.innerBox}>
-        <div className={styles.logo}>
-          <img src={logo} alt="Talent Logo" />
-          <h6 className={styles.headings} ><b>Welcome to Talent Corner - India’s Biggest Placement Consultancy</b></h6>
-        </div>
-        <h1 className={styles.heading}>Sign up</h1>
+      <div className={styles.rightSection}>
+        <div className={styles.innerBox}>
+          <div className={styles.logo}>
+            <img src={logo} alt="Talent Logo" />
+            <h6>
+              <b>
+                Welcome to Talent Corner - India’s Fastest Growing Recruitment Franchise Network
+              </b>
+            </h6>
+          </div>
+          <h1 className={styles.heading}>Sign up</h1>
 
-        <InputControl
-          label="Name"
-          placeholder="Enter your name"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, name: event.target.value }))
-          }
-        />
-        <InputControl
-          label="Email"
-          placeholder="Enter email address"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, email: event.target.value }))
-          }
-        />
-        <div style={{ position: "relative" }}>
           <InputControl
-            label="Password"
-            type={showPassword ? "text" : "password"}
+            label="Name"
+            placeholder="Enter your name"
             onChange={(event) =>
-              setValues((prev) => ({ ...prev, pass: event.target.value }))
+              setValues((prev) => ({ ...prev, name: event.target.value }))
             }
-            placeholder="Enter Password"
           />
-        </div>
-        <div style={{position:"relative"}}>
-          <input
-            type="checkbox"
-            checked={showPassword}
-            onChange={handleTogglePassword}
-            id="showPassword"
-            style={{  right: "10px", top: "50%", }}
+          <InputControl
+            label="Email"
+            placeholder="Enter email address"
+            onChange={(event) =>
+              setValues((prev) => ({ ...prev, email: event.target.value }))
+            }
           />
-          <label htmlFor="showPassword" style={{ marginLeft: "5px", color: "#675080"}}>Show Password</label>
+          <div style={{ position: "relative" }}>
+            <InputControl
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, pass: event.target.value }))
+              }
+              placeholder="Enter Password"
+            />
+          </div>
+          <div style={{ position: "relative" }}>
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={handleTogglePassword}
+              id="showPassword"
+              style={{ right: "10px", top: "50%" }}
+            />
+            <label
+              htmlFor="showPassword"
+              style={{ marginLeft: "5px", color: "#675080" }}
+            >
+              Show Password
+            </label>
+          </div>
+
+          <div className={styles.footer}>
+            <b className={styles.error}>{errorMsg}</b>
+            <button onClick={handleSubmission} disabled={submitButtonDisabled}>
+              Signup
+            </button>
+            <p>
+              Already have an account?{" "}
+              <span>
+                <Link to="/">Login</Link>
+              </span>
+            </p>
+          </div>
         </div>
-        
-        <div className={styles.footer}>
-          <b className={styles.error}>{errorMsg}</b>
-          <button onClick={handleSubmission} disabled={submitButtonDisabled}>
-            Signup
-          </button>
-          <p>
-            Already have an account?{" "}
-            <span>
-              <Link to="/">Login</Link>
-            </span>
-          </p>
-        </div>
+      </div>
+      <div className={styles.leftSection}>
+        <img src={sideImage} alt="Side visual" />
       </div>
     </div>
   );

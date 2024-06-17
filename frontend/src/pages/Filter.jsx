@@ -5,7 +5,7 @@ import { MultiSelect } from "react-multi-select-component";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-function Filter() {
+function Filter(props) {
     const [data, setData] = useState([]);
     const [selectedRoles, setSelectedRoles] = useState([]);
     const [data1, setData1] = useState([]);
@@ -98,37 +98,33 @@ function Filter() {
         const url = `mailto:${emailId}`;
         window.open(url, '_blank');
     };
-      
 
     const handleCallClick = (contactNo) => {
         window.location.href = `tel:${contactNo}`;
     };
-    
+
     const handleProfileClick = (contactNo) => {
         navigate(`/profiles/${contactNo}`);
-      };
+    };
 
     const styles = {
         app: {
             fontFamily: 'Cambria, Cochin, Georgia, Times, Times New Roman, serif',
-            
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             alignContent:'center',
-            overflowY: 'auto',
+            overflow: 'auto',
             backgroundColor: '#f4f9f4',
             marginTop:'15px',
             maxHeight: 'calc(100vh - 20px)', /* Limit the height of the page to the viewport height minus top margin */
         },
         tableContainer: {
-            margin: '30px auto',
-            marginLeft:'135px',
-            width: 'auto',
-            maxHeight: '430px',
+            margin: '20px auto',
+            maxHeight: '450px',
             fontSize: '16px',
             boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-            overflowY: 'auto',
+            overflow: 'auto',
             color: 'purple',
             fontWeight: '200',
             border: '1px solid #ddd',
@@ -137,7 +133,7 @@ function Filter() {
             borderRadius: '10px', /* Round the corners of the table container */
         },
         table: {
-            width: 'auto',
+            overflow:'auto',
             borderCollapse: 'separate', /* Use separate to apply spacing between rows */
             backgroundColor: '#fff',
             borderSpacing: '0 12px', /* Space between rows */
@@ -162,16 +158,15 @@ function Filter() {
             boxShadow: '0 5px 5px rgba(0, 0, 0, 0.1)', /* Add a slight shadow for better visibility */
             border: 'none',
             padding:'10px',
-
         },
         td: {
-            border: 'none',
+              border: 'none',
             padding:'10px',
-
         },
         pagination: {
             display: 'flex',
             justifyContent: 'center',
+            margin: '20px 0',
         },
         button: {
             margin: '0 5px',
@@ -190,19 +185,21 @@ function Filter() {
         },
         i:{
             cursor: 'pointer',
-
         },
         iconPurpleDark: {
             color: '#6a0dad',
-
         },
-     
-        searchBox: {
+        filterBar: {
+            backgroundColor: '#fff',
+            padding: '12px',
+            borderRadius: '20px',
+            marginTop:'45px',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+            gap: '10px',
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            margin: '20px 0',
+            justifyContent: 'center',
+            alignContent: 'space-between',
         },
         filterItem: {
             border: 'none',
@@ -210,24 +207,6 @@ function Filter() {
             alignItems: 'center',
             width:'200px',
             justifyContent:'space-around',
-
-        },
-        MultiSelect: {
-            borderColor: 'white',
-        },
-        input: {
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ccc',
-            width: '70px',
-            margin: '0',
-        },
-        
-        filterHeading: {
-            fontSize: '18px',
-            marginBottom: '5px',
-            color: '#333',
-            textAlign: 'center',
         },
         radioContainer: {
             display: 'flex',
@@ -238,32 +217,19 @@ function Filter() {
             paddingTop:'6px',
             marginRight: '10px',
         },
-        filterBar: {
-            marginLeft:'170px',
-            marginRight:'50px',
-            backgroundColor: '#fff',
-            padding: '12px',
-            borderRadius: '20px',
-            marginTop:'45px',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-            gap: '10px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            
-            alignContent: 'space-between',
+        input: {
+            padding: '8px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+            width: '70px',
+            margin: '0',
         },
-        searchBox: { // To change search box element look
-            border: 'none',
-            fontSize: '10px',
-            minHeight: '50px',
-          },
-
     };
 
+
     return (
-        <div style={{backgroundColor:'#f4f9f4', marginLeft:'120px'}}>
-        <div >
+<div style={{backgroundColor:'#f4f9f4', marginLeft:'120px'}}>
+<div className={props.sidebarOpen ? "page-content" : "page-content shifted"} style={{backgroundColor:'#f4f9f4'}}>
             <div style={styles.filterBar}>
                 <div style={styles.filterItem}>
                     <MultiSelect
@@ -357,22 +323,19 @@ function Filter() {
                     </div>
                 </div>
             </div>
-
-         
-            <div style={styles.app}>
-                <div style={styles.tableContainer}>
-                    <table className="table table-hover" style={styles.table}>
-                        <thead>
-                            <tr>
-                                <th style={{ ...styles.thTd, ...styles.th }}>Name</th>
-                                <th style={{ ...styles.thTd, ...styles.th }}>Role</th>
-                                <th style={{ ...styles.thTd, ...styles.th }}>Experience</th>
-                                <th style={{ ...styles.thTd, ...styles.th }}>Location</th>
-                                <th style={{ ...styles.thTd, ...styles.th }}>Department</th>
-                                <th style={{ ...styles.thTd, ...styles.th }}>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div style={styles.tableContainer}>
+                <table style={styles.table}>
+                    <thead>
+                        <tr style={styles.tr}>
+                            <th style={styles.th}>Name</th>
+                            <th style={styles.th}>Role</th>
+                            <th style={styles.th}>Experience</th>
+                            <th style={styles.th}>Location</th>
+                            <th style={styles.th}>Department</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                             {filteredData.map((row, index) => (
                                 <tr style={styles.tr} key={index}>
                                     <td>
@@ -407,10 +370,8 @@ function Filter() {
                                 </tr>
                             ))}
                         </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
-
             <div style={styles.pagination}>
                 <button
                     style={styles.button}
