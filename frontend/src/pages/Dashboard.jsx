@@ -12,39 +12,46 @@ const Dashboard = ({ sidebarOpen }) => {
   const recordsPerPage = 50;
   const [searchTerm, setSearchTerm] = useState('');
   const [isBooleanSearch, setIsBooleanSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const fetchData = async (page, search = '', booleanSearch = false) => {
+    const offset = (page - 1) * recordsPerPage;
+    setIsLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:3001/api/details`, {
+        params: {
+          offset,
+          limit: recordsPerPage,
+          search,
+          booleanSearch
+        }
+      });
+      setData(response.data);
+      setFilteredData(response.data);
+    } catch (error) {
+      setError(error);
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async (page, search = '', booleanSearch = false) => {
-      const offset = (page - 1) * recordsPerPage;
-      setIsLoading(true);
-      try {
-        const response = await axios.get(`http://localhost:3001/api/details`, {
-          params: {
-            offset,
-            limit: recordsPerPage,
-            search,
-            booleanSearch
-          }
-        });
-        setData(response.data);
-        setFilteredData(response.data);
-      } catch (error) {
-        setError(error);
-        console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData(currentPage, searchTerm, isBooleanSearch);
-  }, [currentPage, searchTerm, isBooleanSearch]);
+  }, [currentPage, isBooleanSearch]);
 
-  const handleSearch = (e) => {
+  const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1);
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim() !== '') {
+      setIsLoading(true);
+      setCurrentPage(1);
+      fetchData(1, searchTerm, isBooleanSearch); // Fetch data for the new search term
+    }
   };
 
   const handlePrevPage = () => {
@@ -66,14 +73,14 @@ const Dashboard = ({ sidebarOpen }) => {
   return (
     <div className={sidebarOpen ? "page-content" : "page-content shifted"}>
       <div className="search-box">
-        <i className="bi bi-search search-icon"></i>
         <input
           type="text"
           className="search-input"
           placeholder="Search by name, number, role, experience, location..."
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={handleSearchChange}
         />
+        <i className="bi bi-search search-icon" onClick={handleSearch}></i>
         <div className="toggle-container">
           <span className="toggle-label">Boolean Search</span>
           <label className="switch">
@@ -82,7 +89,6 @@ const Dashboard = ({ sidebarOpen }) => {
           </label>
           <span className="toggle-text">{isBooleanSearch ? 'ON' : 'OFF'}</span>
         </div>
-
       </div>
 
       {isLoading ? (
@@ -146,4 +152,4 @@ const Dashboard = ({ sidebarOpen }) => {
   );
 };
 
-export default Dashboard;
+export default Dashboard;

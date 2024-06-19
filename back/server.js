@@ -47,9 +47,11 @@ function parseCSV(csvString) {
       stream
           .pipe(csvParser())
           .on('data', (data) => {
+              console.log('Parsed Row:', data);
               results.push(data);
           })
           .on('end', () => {
+              console.log('Parsed Csv data:', results);
               resolve(results);
           })
           .on('error', (error) => reject(error));
@@ -156,38 +158,6 @@ app.get('/api/filter', async (req, res) => {
     res.json(result);
   } catch (err) {
     res.status(500).send(err.message);
-  }
-});
-
-
-// Nodemailer setup
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // You can use other email services
-  auth: {
-      user: 'mhatresanskruti42@gmail.com', // Your email
-      pass: 'przjkjwyfkjdhxsr'// Your email password
-  }
-});
-
-// Route to send emails
-app.post('/api/send-emails', async (req, res) => {
-  const { emails } = req.body;
-
-  try {
-      for (let email of emails) {
-          const mailOptions = {
-              from: 'mhatresanskruti42@gmail.com',
-              to: email,
-              subject: 'Talent Corner Hr Services Pvt Ltd',
-              text: 'This mail is regarding Job Hiring Purpose',
-          };
-
-          await transporter.sendMail(mailOptions);
-      }
-      res.status(200).json({ message: 'Emails sent successfully' });
-  } catch (error) {
-      console.error('Error sending emails:', error);
-      res.status(500).json({ error: 'Failed to send emails' });
   }
 });
 

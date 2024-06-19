@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px; /* Reduced gap */
-  max-height: 90vh; /* Prevent full page coverage */
+  max-height: 95vh; /* Prevent full page coverage */
 }
 
 .logo {

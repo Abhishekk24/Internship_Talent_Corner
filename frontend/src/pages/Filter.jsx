@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { MultiSelect } from "react-multi-select-component";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 function Filter(props) {
     const [data, setData] = useState([]);
@@ -125,18 +127,44 @@ function Filter(props) {
         }
     };
 
+    const handleExport = () => {
+        const dataToExport = selectedRows.map(row => ({
+            Name: row.Name_1,
+            Role: row.Role,
+            Experience: row.years_of_experience,
+            Location: row.current_location,
+            State: row.State,
+            Department: row.Department,
+            Contact: row.contact_no,
+            Email: row.email_id,
+            Ann_Salary: row.ann_salary,
+            Industry: row.Industry,
+            Current_Company_Name: row.curr_company_name,
+            Current_Company_Duration_From: row.curr_company_duration_from,
+            Current_Company_Designation: row.curr_company_designation,
+            Previous_Company_Name: row.prev_employer_name,
+            UG_Degree: row.ug_degree,
+            UG_Specialization: row.ug_specialization,
+            UG_Year: row.ug_year,
+            PG_Degree: row.pg_degree,
+            PG_Specialization: row.pg_specialization,
+            PG_Year: row.pg_year,
+            PG_College: row.pg_college,
+            Gender: row.Gender,
+            Marital_Status: row.marital_status,
+            Age: row.Age
+        }));
 
-    const handleSendEmails = async () => {
-        try {
-            for (let row of selectedRows) {
-                const selectedEmail = row.email_id;
-                await axios.post('http://localhost:3001/api/send-emails', { emails: [selectedEmail] });
-            }
-            alert('Emails sent successfully!');
-        } catch (error) {
-            console.error('Error sending emails:', error);
-        }
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Selected Profiles");
+
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(data, 'SelectedProfiles.xlsx');
     };
+
+   
 
     const styles = {
         app: {
@@ -428,7 +456,7 @@ function Filter(props) {
                         </tbody>
                     </table>
                 </div>
-                <button onClick={handleSendEmails} style={styles.button}>Send Emails</button>
+                <button onClick={handleExport} style={styles.button}>Export Data</button>
                 <div style={styles.pagination}>
                     <button
                         style={styles.button}

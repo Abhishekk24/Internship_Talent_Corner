@@ -238,7 +238,7 @@ async function insertCSVData(data) {
         }
 
         const values = data.map(row => [
-            row.Name_1,
+            row.Name,
             row.email_id,
             row.contact_no,
             row.current_location,
