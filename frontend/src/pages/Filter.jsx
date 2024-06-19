@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { MultiSelect } from "react-multi-select-component";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-
 function Filter(props) {
     const [data, setData] = useState([]);
     const [selectedRoles, setSelectedRoles] = useState([]);
@@ -23,6 +22,7 @@ function Filter(props) {
     const [totalPages, setTotalPages] = useState(1);
     const [selectedGender, setSelectedGender] = useState(null);
     const [selectedAge, setSelectedAge] = useState(null);
+    const [selectedRows, setSelectedRows] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -109,6 +109,35 @@ function Filter(props) {
         navigate(`/profiles/${contactNo}`);
     };
 
+    const handleCheckboxChange = (row) => {
+        if (selectedRows.includes(row)) {
+            setSelectedRows(selectedRows.filter(item => item !== row));
+        } else {
+            setSelectedRows([...selectedRows, row]);
+        }
+    };
+
+    const handleSelectAll = () => {
+        if (selectedRows.length === filteredData.length) {
+            setSelectedRows([]);
+        } else {
+            setSelectedRows([...filteredData]);
+        }
+    };
+
+
+    const handleSendEmails = async () => {
+        try {
+            for (let row of selectedRows) {
+                const selectedEmail = row.email_id;
+                await axios.post('http://localhost:3001/api/send-emails', { emails: [selectedEmail] });
+            }
+            alert('Emails sent successfully!');
+        } catch (error) {
+            console.error('Error sending emails:', error);
+        }
+    };
+
     const styles = {
         app: {
             fontFamily: 'Cambria, Cochin, Georgia, Times, Times New Roman, serif',
@@ -144,6 +173,12 @@ function Filter(props) {
             padding: '8px',
             marginTop: '0px',
             textAlign: 'left',
+        },
+        thCheckbox: {
+            position: 'absolute',
+            left: '5px',
+            top: '50%',
+            transform: 'translateY(-50%)'
         },
         th: {
             borderBottom: '2px solid #ddd',
@@ -226,13 +261,14 @@ function Filter(props) {
             width: '70px',
             margin: '0',
         },
+
+        
     };
 
-
     return (
-<div style={{backgroundColor:'#f4f9f4', marginLeft:'120px'}}>
-<div className={props.sidebarOpen ? "page-content" : "page-content shifted"} style={{backgroundColor:'#f4f9f4'}}>
-            <div style={styles.filterBar}>
+        <div style={{backgroundColor:'#f4f9f4', marginLeft:'120px'}}>
+            <div className={props.sidebarOpen ? "page-content" : "page-content shifted"} style={{backgroundColor:'#f4f9f4'}}>
+                <div style={styles.filterBar}>
                 <div style={styles.filterItem}>
                     <MultiSelect
                         className="multi-select-container" // Apply the class
@@ -324,22 +360,40 @@ function Filter(props) {
                         </label>
                     </div>
                 </div>
-            </div>
-            <div style={styles.tableContainer}>
-                <table style={styles.table}>
-                    <thead>
-                        <tr style={styles.tr}>
-                            <th style={styles.th}>Name</th>
-                            <th style={styles.th}>Role</th>
-                            <th style={styles.th}>Experience</th>
-                            <th style={styles.th}>Location</th>
-                            <th style={styles.th}>Department</th>
-                            <th style={styles.th}>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                </div>
+                <div style={styles.tableContainer}>
+                    <table style={styles.table}>
+                        <thead>
+                            <tr style={styles.tr}>
+                            <th style={{...styles.th, paddingLeft: '8px', }}>
+                            <input
+                                    type="checkbox"
+                                    onChange={handleSelectAll}
+                                    checked={selectedRows.length === filteredData.length && filteredData.length > 0}
+                                    
+                                />
+                                    
+                                </th>
+                    
+                                <th style={styles.th}>Name</th>
+                                <th style={styles.th}>Role</th>
+                                <th style={styles.th}>Experience</th>
+                                <th style={styles.th}>Location</th>
+                                <th style={styles.th}>Department</th>
+                                <th style={styles.th}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {filteredData.map((row, index) => (
                                 <tr style={styles.tr} key={index}>
+                                    <td style={styles.td}>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedRows.includes(row)}
+                                            onChange={() => handleCheckboxChange(row)}
+                                            
+                                        />
+                                    </td>
                                     <td>
                                         <i 
                                             className="bi bi-person-circle" 
@@ -372,24 +426,25 @@ function Filter(props) {
                                 </tr>
                             ))}
                         </tbody>
-                </table>
+                    </table>
+                </div>
+                <button onClick={handleSendEmails} style={styles.button}>Send Emails</button>
+                <div style={styles.pagination}>
+                    <button
+                        style={styles.button}
+                        onClick={() => handlePrevPage()}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        style={styles.button}
+                        onClick={() => handleNextPage()}
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
-            <div style={styles.pagination}>
-                <button
-                    style={styles.button}
-                    onClick={() => handlePrevPage()}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                <button
-                    style={styles.button}
-                    onClick={() => handleNextPage()}
-                >
-                    Next
-                </button>
-            </div>
-        </div>
         </div>
     );
 }

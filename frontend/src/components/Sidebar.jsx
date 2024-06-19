@@ -5,6 +5,7 @@ import Profile from "../Images/profile.png";
 import Dashboard from "../Images/dashboard.svg";
 import Transactions from "../Images/transactions.svg";
 import Performance from "../Images/performance.svg";
+import Logout from "../Images/logout.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
@@ -72,13 +73,13 @@ const Sidebar = ({ name, email, sidebarOpen, setSidebarOpen }) => {
                     <li className={location.pathname === "/excel" ? "active" : ""}>
                         <div onClick={() => handleIconClick("/excel")}>
                             <img src={Transactions} alt="filter" />
-                            {!sidebarOpen && <span className="label">Excel Uploader</span>}
-                            {sidebarOpen && <span className="text">Excel Uploader</span>}
+                            {!sidebarOpen && <span className="label"> Upload</span>}
+                            {sidebarOpen && <span className="text">Upload</span>}
                         </div>
                     </li>
                     <li className={location.pathname === "/logout" ? "active" : ""}>
                         <div onClick={() => handleIconClick("/logout")}>
-                            <img src={Transactions} alt="logout" />
+                            <img src={Logout} alt="logout" className="img-specific-padding"/>
                             {!sidebarOpen && <span className="label">Logout</span>}
                             {sidebarOpen && <span className="text">Logout</span>}
                         </div>

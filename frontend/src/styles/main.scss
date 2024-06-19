@@ -159,7 +159,7 @@
             p.name {
                 padding: 0;
                 margin: 0;
-                font-size: 16.7px;
+                font-size: 17px;
                 color: $darkGrey;
                 text-transform: capitalize;
                 font-weight: $heavyFont;
@@ -192,7 +192,7 @@
                 align-items: center;
                 justify-content: flex-start;
                 flex-direction: row;
-                margin: 0.1rem 0;
+                margin: 0.5rem 0;
                 padding: 0.35rem 0;
                 width: 100%;
                 border-radius: 1rem;
@@ -200,9 +200,13 @@
                 position: relative; 
 
                 img {
-                    padding: 0 1rem 0 0.5rem;
+                    padding: 0 1rem 0 0.8rem;
+                }
+                .img-specific-padding {
+                    padding-left: 19px; /* Adjust padding as needed */
                 }
 
+                
                 a {
                     text-decoration: none;
                     color: $darkGrey;
@@ -217,8 +221,8 @@
 
                 .label {
                     position: absolute;
-                     /* Adjust the percentage to move it up or down */
-                    left: 5rem;
+                   /* Adjust the percentage to move it up or down */
+                    left: 4rem;
                     font-size: 1.2rem;
                 }
                 
@@ -228,10 +232,10 @@
                     position: absolute;
                     top: 50%;
                     transform: translateY(-50%);
-                    left: 7rem; /* Adjust the distance from the sidebar */
+                    left: 5rem; /* Adjust the distance from the sidebar */
                     background-color: #e5defc;
                     color: #4c51bf;
-                    border-radius: 0.375rem;
+                    border-radius: 0.379rem;
                     padding: 0.25rem 0.5rem;
                     margin-left: 0.75rem;
                     font-size: 1.2rem;
@@ -245,6 +249,7 @@
                 background-color: $veryLightGreen;
                 color: $blue;
                 font-weight: bold;
+                padding: 0.75rem 0rem;
               
                 a {
                     color: $blue;
@@ -256,8 +261,9 @@
 
             li:hover {
                 background-color: $lightGrey;
-                transition: 0.25s;
+                transition: 0.35s;
                 color: #4c51bf;
+                padding: 0.75rem 0rem;
                 
             }
         }
@@ -265,7 +271,7 @@
 }
 
 .sidebar.active {
-    width: 6rem;
+    width: 7rem;
     
     transition: 0.5s all;
 
@@ -317,7 +323,26 @@
     }
 
     .contentsContainer {
-        
+        li.active {
+            background-color: $veryLightGreen;
+            color: $blue;
+            font-weight: bold;
+            width: 50px;
+            height: 50px;
+        }
+        li:hover {
+            background-color: $lightGrey;
+            transition: 0.35s;
+            color: #4c51bf;
+            width: 50px;
+            height: 50px;
+        }
+        img {
+            padding: 0 1rem 0 0.5rem;
+        }
+        .img-specific-padding {
+            padding-left: 12px; /* Adjust padding as needed */
+        }
         a {
             opacity: 0;
         }
@@ -334,7 +359,5 @@
     transition: margin-left 0.3s;
   }
   
-  .page-content.shifted {
-    margin-left: 250px; /* Adjust based on your sidebar width */
-  }
+
   
