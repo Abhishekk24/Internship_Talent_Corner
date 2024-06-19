@@ -1,11 +1,12 @@
+require('dotenv').config();
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-    host: '119.18.54.70',
-    user: 'talendgp',
-    password: '@Naurki@66',
-    database: 'talendgp_naukri_data',
-    timeout: 60000,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    timeout: process.env.DB_TIMEOUT,
 });
 
 connection.connect((err) => {
