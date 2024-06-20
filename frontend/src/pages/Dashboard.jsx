@@ -42,16 +42,20 @@ const Dashboard = ({ sidebarOpen }) => {
     fetchData(currentPage, searchTerm, isBooleanSearch);
   }, [currentPage, isBooleanSearch]);
 
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setCurrentPage(1); // Reset to the first page
+      fetchData(1, '', isBooleanSearch);
+    }
+  }, [searchTerm, isBooleanSearch]);
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const handleSearch = () => {
-    if (searchTerm.trim() !== '') {
-      setIsLoading(true);
-      setCurrentPage(1);
-      fetchData(1, searchTerm, isBooleanSearch); // Fetch data for the new search term
-    }
+    setCurrentPage(1); // Reset to the first page for new search
+    fetchData(1, searchTerm, isBooleanSearch); // Fetch data for the new search term
   };
 
   const handlePrevPage = () => {
@@ -152,4 +156,4 @@ const Dashboard = ({ sidebarOpen }) => {
   );
 };
 
-export default Dashboard;
+export default Dashboard;

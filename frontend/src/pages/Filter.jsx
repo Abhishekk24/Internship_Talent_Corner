@@ -70,7 +70,7 @@ function Filter(props) {
                     Gender: selectedGender,
                     Age: selectedAge,
                     page: currentPage,
-                    limit: 10
+                    limit: 20
                 }
             });
             setFilteredData(response.data);
